@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DDMini</string>
+
+    <!-- Ingredient Screen -->
+
+    <string name="str_search_item">Search for an item</string>
+</resources>

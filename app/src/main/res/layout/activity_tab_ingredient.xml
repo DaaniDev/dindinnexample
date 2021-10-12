@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/_10sdp"
+    tools:context=".MainActivity">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_ingredient_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_arrow_down"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_search_ingredient"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/grey"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="@dimen/_5sdp"
+        android:hint="@string/str_search_item"
+        android:background="@drawable/bk_et_search"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_ingredient_down"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/ingredient_tabs"
+        app:layout_constraintTop_toBottomOf="@id/et_search_ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabGravity="start"
+        app:tabMode="scrollable"
+        app:tabMinWidth="@dimen/_30sdp"
+        app:tabIndicatorColor="@android:color/holo_green_dark"/>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/tab_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/ingredient_tabs"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
