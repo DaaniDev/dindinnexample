@@ -2,6 +2,7 @@ package com.daanidev.ddmini.ui.neworder
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -9,6 +10,7 @@ import com.daanidev.ddmini.R
 import com.daanidev.ddmini.ui.ingredient.IngredientTabActivity
 import com.daanidev.ddmini.ui.ingredient.adapter.IngredientTabAdapter
 import com.daanidev.ddmini.ui.ingredient.tabs
+import com.daanidev.ddmini.ui.neworder.viewmodel.NewOrderViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_new_order.*
@@ -16,6 +18,7 @@ import kotlinx.android.synthetic.main.rel_action_bar.*
 
 @AndroidEntryPoint
 class NewOrderActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +44,7 @@ class NewOrderActivity : AppCompatActivity() {
             val inn = Intent(this,IngredientTabActivity::class.java)
             startActivity(inn)
         }
+
 
     }
 }

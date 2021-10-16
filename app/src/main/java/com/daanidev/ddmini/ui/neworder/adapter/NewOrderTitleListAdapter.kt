@@ -13,10 +13,8 @@ import com.daanidev.ddmini.ui.ingredient.adapter.IngredientListAdapter
 import com.daanidev.ddmini.ui.ingredient.model.IngredientList
 import com.daanidev.ddmini.ui.neworder.model.Data
 
-class NewOrderTitleListAdapter(val context:Context): RecyclerView.Adapter<NewOrderTitleListAdapter.ViewHolder>() {
+class NewOrderTitleListAdapter(val context:Context,val titleList: List<Data>): RecyclerView.Adapter<NewOrderTitleListAdapter.ViewHolder>() {
 
-
-    private var titleList= listOf<Data>()
     private lateinit var subItemListAdapter: NewOrderSubItemListAdapter
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewOrderTitleListAdapter.ViewHolder {
 
@@ -29,7 +27,7 @@ class NewOrderTitleListAdapter(val context:Context): RecyclerView.Adapter<NewOrd
 
     override fun getItemCount(): Int {
 
-        return 1
+        return titleList.size
     }
 
     override fun onBindViewHolder(holder: NewOrderTitleListAdapter.ViewHolder, position: Int) {
@@ -38,24 +36,17 @@ class NewOrderTitleListAdapter(val context:Context): RecyclerView.Adapter<NewOrd
 
     }
 
-    fun setList(titleList:List<Data>){
-
-        this.titleList=titleList
-        notifyDataSetChanged()
-    }
-
     inner class ViewHolder(private val itemOrderTitleListBinding: ItemOrderTitleListBinding) :
         RecyclerView.ViewHolder(itemOrderTitleListBinding.root) {
 
         fun bind(pos:Int){
 
-          //  itemOrderTitleListBinding.obj=titleList[pos]
-            subItemListAdapter = NewOrderSubItemListAdapter()
+            itemOrderTitleListBinding.obj=titleList[pos]
+            subItemListAdapter = NewOrderSubItemListAdapter(titleList[pos].addon)
             itemOrderTitleListBinding.listItemTitle.apply {
                 this.layoutManager=LinearLayoutManager(context,RecyclerView.VERTICAL,false)
                 this.adapter=subItemListAdapter
             }
-          //  subItemListAdapter.setList(titleList[pos].addon)
 
 
         }

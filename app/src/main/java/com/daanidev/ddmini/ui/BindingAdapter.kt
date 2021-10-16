@@ -1,11 +1,16 @@
 package com.daanidev.ddmini.ui
 
+import android.os.CountDownTimer
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.daanidev.ddmini.R
+import com.daanidev.ddmini.utils.AppUtils
+import io.reactivex.Observable
+import io.reactivex.Observer
 
 object BindingAdapter {
 
@@ -45,7 +50,7 @@ object BindingAdapter {
 
     @JvmStatic
     @BindingAdapter(value = ["qty","string"])
-    fun setTitle(view: TextView, qty:Int,text:String) {
+    fun setTitle(view: TextView, qty:Int?,text:String?) {
 
         view.text="$qty $text"
     }
@@ -56,5 +61,48 @@ object BindingAdapter {
 
         view.text="# Protein ($protein)"
     }
+
+    @JvmStatic
+    @BindingAdapter(value = ["accept"])
+    fun setAccept(view: TextView, accept:Observable<Boolean>) {
+
+        view.text="Accept"
+
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["created","alerted","expired"])
+    fun timer(view: TextView,created:String,alerted:String,expired:String) {
+
+
+        val alertTime=AppUtils.alertTime(created,alerted)
+        val timer = object : CountDownTimer(
+            AppUtils.calculateCountDown(
+              created,
+                expired
+            ), 1000
+        ) {
+            override fun onTick(millisUntilFinished: Long) {
+
+              view.text = "${millisUntilFinished/1000}s"
+
+                Log.wtf("timeer","$millisUntilFinished $alertTime")
+                 if((millisUntilFinished/1000)==alertTime)
+                {
+                    AppUtils.playTune(view.context)
+                }
+            }
+
+            override fun onFinish() {
+
+                Log.wtf("timer","ended")
+
+            }
+
+        }
+        timer.start()
+
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.daanidev.ddmini.ui.neworder.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,10 +11,9 @@ import com.daanidev.ddmini.databinding.ItemOrderTitleListBinding
 import com.daanidev.ddmini.ui.neworder.model.Addon
 import com.daanidev.ddmini.ui.neworder.model.Data
 
-class NewOrderSubItemListAdapter : RecyclerView.Adapter<NewOrderSubItemListAdapter.ViewHolder>() {
+class NewOrderSubItemListAdapter(val subItemList: List<Addon>) : RecyclerView.Adapter<NewOrderSubItemListAdapter.ViewHolder>() {
 
 
-    private var subItemList = listOf<Addon>()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -28,24 +28,30 @@ class NewOrderSubItemListAdapter : RecyclerView.Adapter<NewOrderSubItemListAdapt
 
     override fun getItemCount(): Int {
 
-        return 1
+        return subItemList.size
     }
 
     override fun onBindViewHolder(holder: NewOrderSubItemListAdapter.ViewHolder, position: Int) {
 
+        holder.onBind(position)
 
-
-    }
-
-    fun setList(subItemList: List<Addon>) {
-
-        this.subItemList = subItemList
-        notifyDataSetChanged()
     }
 
     inner class ViewHolder(private val itemOrderSubitemsListBinding: ItemOrderSubitemsListBinding) :
         RecyclerView.ViewHolder(itemOrderSubitemsListBinding.root) {
 
+        fun onBind(pos:Int){
 
+            if(pos==0)
+            {
+                itemView.visibility=View.VISIBLE
+                itemOrderSubitemsListBinding.obj=subItemList[pos]
+            }
+            else{
+                itemView.visibility= View.GONE
+
+            }
+
+        }
     }
 }

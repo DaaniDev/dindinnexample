@@ -9,6 +9,7 @@
             type="com.daanidev.ddmini.ui.neworder.model.Addon" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/rel_parent_sublist"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -17,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_12ssp"
-        android:text="# Protein(7)"
+        protein="@{obj.protein}"
         android:textColor="@color/light_grey"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -27,7 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_14ssp"
-        android:text="1 Almond"
+        qty="@{obj.quantity}"
+        string="@{obj.title}"
         android:textColor="@color/grey"
         app:layout_constraintTop_toBottomOf="@id/tv_item_protein"
         app:layout_constraintStart_toStartOf="parent"/>

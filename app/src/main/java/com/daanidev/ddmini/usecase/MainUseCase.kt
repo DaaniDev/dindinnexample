@@ -7,5 +7,6 @@ import javax.inject.Inject
 class MainUseCase  @Inject constructor(private val mainRepository: MainRepository) {
 
     fun getIngredientsUseCase()=mainRepository.getIngredients()
+    fun getNewOrder()=mainRepository.getNewOrder()
 
 }

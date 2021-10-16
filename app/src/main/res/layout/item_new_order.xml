@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.daanidev.ddmini.ui.neworder.viewmodel.NewOrderViewModel" />
+        <variable
+            name="obj"
+            type="com.daanidev.ddmini.ui.neworder.model.NewOrderResponse" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/_170sdp"
         android:layout_height="match_parent"
@@ -15,6 +25,7 @@
             android:id="@+id/rel_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/_2sdp"
             app:layout_constraintTop_toTopOf="parent">
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_order_num"
@@ -66,12 +77,42 @@
             android:id="@+id/tv_order_auto_reject_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="45s"
+            android:text="@{viewmodel.timerText}"
+            tools:text="100"
             android:layout_marginTop="@dimen/_5sdp"
             android:textColor="@color/black"
             android:textSize="@dimen/_15ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+          <!--  <ProgressBar
+                android:id="@+id/progressbar"
+                style="@android:style/Widget.Material.ProgressBar.Horizontal"
+                android:max="100"
+                android:progress="0"
+                android:layout_width="0dp"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_order_time"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_order_auto_reject_timer"/>
+       -->
+
+            <LinearLayout
+                android:id="@+id/progress_bar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_order_time"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_order_auto_reject_timer"/>
+
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
