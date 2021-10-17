@@ -14,6 +14,7 @@ import com.daanidev.ddmini.R
 import com.daanidev.ddmini.databinding.FragmentIncomingBinding
 import com.daanidev.ddmini.ui.BaseFragment
 import com.daanidev.ddmini.ui.ingredient.model.IngredientResponse
+import com.daanidev.ddmini.ui.neworder.NewOrderActivity
 import com.daanidev.ddmini.ui.neworder.adapter.IncomingOrderAdapter
 import com.daanidev.ddmini.ui.neworder.model.NewOrderResponse
 import com.daanidev.ddmini.ui.neworder.viewmodel.NewOrderViewModel
@@ -52,6 +53,8 @@ class IncomingFragment : BaseFragment<FragmentIncomingBinding>() {
 
        lifecycleScope.launch {
            getOrders()
+           delay(10000L)
+           getOrders()
 
        }
 
@@ -67,6 +70,7 @@ class IncomingFragment : BaseFragment<FragmentIncomingBinding>() {
 
                 override fun onNext(t: NewOrderResponse) {
                     incomingOrderAdapter.addNewOrder(t)
+                    (activity as NewOrderActivity).setOrderCount(incomingOrderAdapter.itemCount)
 
                 }
 
@@ -80,6 +84,8 @@ class IncomingFragment : BaseFragment<FragmentIncomingBinding>() {
 
 
             })
+
+
     }
 
 

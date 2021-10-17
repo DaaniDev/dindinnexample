@@ -4,4 +4,11 @@
     <!-- Ingredient Screen -->
 
     <string name="str_search_item">Search for an item</string>
+    <string name="str_no_data">No Data Found</string>
+
+    <!-- Order Screen -->
+    <string name="str_ok">Okay</string>
+    <string name="str_accept">Accept</string>
+    <string name="str_auto_reject">Auto Reject</string>
+    <string name="str_rest_name">Restaurant One</string>
 </resources>

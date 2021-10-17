@@ -1,6 +1,7 @@
 package com.daanidev.ddmini.ui.ingredient.fragment
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.daanidev.ddmini.R
 import com.daanidev.ddmini.databinding.FragmentBentoBinding
 import com.daanidev.ddmini.ui.BaseFragment
+import com.daanidev.ddmini.ui.ingredient.EditTextValueListener
+import com.daanidev.ddmini.ui.ingredient.IngredientTabActivity
 import com.daanidev.ddmini.ui.ingredient.adapter.IngredientListAdapter
 import com.daanidev.ddmini.ui.ingredient.model.IngredientResponse
 import com.daanidev.ddmini.ui.ingredient.viewmodel.IngredientViewModel
@@ -20,7 +23,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 @AndroidEntryPoint
-class BentoFragment : BaseFragment<FragmentBentoBinding>() {
+class BentoFragment : BaseFragment<FragmentBentoBinding>(),EditTextValueListener {
 
     private val viewModel by viewModels<IngredientViewModel>()
     private lateinit var listAdapter: IngredientListAdapter
@@ -65,5 +68,20 @@ class BentoFragment : BaseFragment<FragmentBentoBinding>() {
 
 
             })
+
+        (activity as IngredientTabActivity).setListener(this)
+    }
+
+    override fun onChange(string: String) {
+
+        if(string.isEmpty())
+        {
+            binding.listIngredients.visibility= View.VISIBLE
+            binding.tvNotData.visibility=View.GONE
+        }
+        else{
+            binding.listIngredients.visibility= View.GONE
+            binding.tvNotData.visibility=View.VISIBLE
+        }
     }
 }

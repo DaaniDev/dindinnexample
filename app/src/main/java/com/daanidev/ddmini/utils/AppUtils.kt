@@ -42,17 +42,17 @@ object AppUtils {
 
         //suppose we have to cut section into 4 parts
         val numberOfSections = 30
-        width -= (20+20 * numberOfSections) //reducing length of layout by 16dp from left and right and in between 16dp {in between*number of sections)
+        width -= (18+18 * numberOfSections) //reducing length of layout by 16dp from left and right and in between 16dp {in between*number of sections)
 
         width /= numberOfSections
         for (i in 0 until 5) {
             val v = View(context)
-            val params = LinearLayout.LayoutParams(width, 10)
+            val params = LinearLayout.LayoutParams(width, 15)
             params.setMargins(16, 0, 0, 0) //giving 16dp internal margin between two views
             v.layoutParams = params
             v.tag= "progress_item_$i"
             viewsList.add(v) //adding views in array list for changing color on click of button
-            v.setBackgroundColor(ContextCompat.getColor(context, R.color.blue))
+            v.background=ContextCompat.getDrawable(context,R.drawable.bk_progress_bar)
             layoutViews.addView(v)
         }
     }

@@ -1,6 +1,8 @@
 package com.daanidev.ddmini.ui.ingredient
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.daanidev.ddmini.R
@@ -17,6 +19,7 @@ val tabs= arrayOf(
 @AndroidEntryPoint
 class IngredientTabActivity : AppCompatActivity() {
 
+    private lateinit var editTextValueListener: EditTextValueListener
     private lateinit var binding : ActivityTabIngredientBinding
     private lateinit var tabAdapter: IngredientTabAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +27,7 @@ class IngredientTabActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_tab_ingredient)
         initUI()
     }
+
 
     private fun initUI(){
 
@@ -35,6 +39,26 @@ class IngredientTabActivity : AppCompatActivity() {
 
         }.attach()
 
+        binding.etSearchIngredient.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                editTextValueListener.onChange(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+    }
+
+    fun setListener(editTextValueListener: EditTextValueListener)
+    {
+        this.editTextValueListener=editTextValueListener
     }
 
 }

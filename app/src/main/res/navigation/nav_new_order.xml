@@ -11,4 +11,12 @@
         android:name="com.daanidev.ddmini.ui.neworder.fragment.IncomingFragment"
         android:label="IncomingFragment"
         tools:layout="@layout/fragment_incoming"/>
+    <fragment
+        android:id="@+id/preparingFragment"
+        android:name="com.daanidev.ddmini.ui.neworder.fragment.PreparingFragment"
+        android:label="PreparingFragment" />
+    <fragment
+        android:id="@+id/collectionFragment"
+        android:name="com.daanidev.ddmini.ui.neworder.fragment.CollectionFragment"
+        android:label="CollectionFragment" />
 </navigation>

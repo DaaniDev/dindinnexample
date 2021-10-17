@@ -3,12 +3,15 @@ package com.daanidev.ddmini.ui.neworder.adapter
 import android.app.Activity
 import android.content.Context
 import android.os.CountDownTimer
+import android.system.Os.accept
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.util.Consumer
+import androidx.core.util.Predicate
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,10 +21,12 @@ import com.daanidev.ddmini.databinding.ItemOrderSubitemsListBinding
 import com.daanidev.ddmini.ui.neworder.model.Addon
 import com.daanidev.ddmini.ui.neworder.model.NewOrderResponse
 import com.daanidev.ddmini.utils.AppUtils
+
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import java.util.*
-import java.util.concurrent.Flow
+import java.util.concurrent.TimeUnit
+import kotlin.math.ceil
+import kotlin.math.floor
 
 class IncomingOrderAdapter(val context: Activity) :
     RecyclerView.Adapter<IncomingOrderAdapter.ViewHolder>() {
@@ -71,9 +76,11 @@ class IncomingOrderAdapter(val context: Activity) :
 
             AppUtils.setupProgressBar(context, itemNewOrderBinding.progressBar)
             countDownTimer(
-                itemNewOrderBinding, newOrdersList[pos].created_at,
+                itemNewOrderBinding,this, newOrdersList[pos].created_at,
                 newOrdersList[pos].alerted_at, newOrdersList[pos].expired_at
             )
+            itemNewOrderBinding.tvNewOrderCount.text="${newOrdersList[pos].data.size} items"
+
         }
 
 
@@ -81,17 +88,18 @@ class IncomingOrderAdapter(val context: Activity) :
 
     private fun countDownTimer(
         itemNewOrderBinding: ItemNewOrderBinding,
+        holder:IncomingOrderAdapter.ViewHolder,
         created: String,
         alerted: String,
         expired: String
     ) {
 
-        val totalTime =20000L
+        val totalTime =AppUtils.calculateCountDown(created,expired)
         val sectionTime:Double = totalTime/5.0
         var count=4.0
         val alertTime = AppUtils.alertTime(created, alerted)
         val timer = object : CountDownTimer(
-            totalTime, 1000
+            totalTime, 100
         ) {
             override fun onTick(millisUntilFinished: Long) {
 
@@ -100,31 +108,46 @@ class IncomingOrderAdapter(val context: Activity) :
                 if ((millisUntilFinished / 1000) == alertTime) {
                     AppUtils.playTune(context)
                 }
-            val result : Double = millisUntilFinished/sectionTime
-               Log.wtf("result",result.toString())
-                Log.wtf("coubt",count.toString())
+            val result : Double = ceil(millisUntilFinished/sectionTime)
                 if (result==count)
                 {
 
                     val itemTag="progress_item_${4-count.toInt()}"
                     Log.wtf("tag",itemTag)
                     count--
-                    itemNewOrderBinding.progressBar.findViewWithTag<View>(itemTag).setBackgroundColor(ContextCompat.getColor(context,R.color.grey))
+                    itemNewOrderBinding.progressBar.findViewWithTag<View>(itemTag).background=ContextCompat.getDrawable(context,R.drawable.bk_progress_bar_grey)
                 }
 
             }
 
             override fun onFinish() {
 
-                itemNewOrderBinding.tvOrderAutoRejectTimer.visibility = View.GONE
-                itemNewOrderBinding.tvOrderAutoReject.visibility = View.GONE
-                itemNewOrderBinding.tvNewOrderAccept.background =
-                    ContextCompat.getDrawable(context, R.drawable.bk_btn_auto_reject)
+                itemNewOrderBinding.tvOrderAutoRejectTimer.visibility = View.INVISIBLE
+                itemNewOrderBinding.tvOrderAutoReject.visibility = View.INVISIBLE
+                itemNewOrderBinding.progressBar.visibility=View.INVISIBLE
+                itemNewOrderBinding.tvNewOrderAccept.background = ContextCompat.getDrawable(context, R.drawable.bk_btn_auto_reject)
+                itemNewOrderBinding.tvNewOrderAccept.text=context.resources.getString(R.string.str_ok)
+                itemNewOrderBinding.tvNewOrderAccept.setTextColor(ContextCompat.getColor(context,R.color.black))
 
 
             }
 
         }
         timer.start()
+
+
+        itemNewOrderBinding.tvNewOrderAccept.setOnClickListener {
+
+            newOrdersList.removeAt(holder.adapterPosition)
+            notifyItemRemoved(holder.adapterPosition)
+            if(itemNewOrderBinding.tvNewOrderAccept.text.equals(context.resources.getString(R.string.str_accept)))
+            {
+              timer.cancel()
+            }
+
+
+
+        }
     }
+
 }
