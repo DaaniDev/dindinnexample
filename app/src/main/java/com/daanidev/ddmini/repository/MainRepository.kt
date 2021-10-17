@@ -10,3 +10,4 @@ interface MainRepository {
     fun getIngredients() : Observable<IngredientResponse>
     fun getNewOrder() : Observable<NewOrderResponse>
 }
+

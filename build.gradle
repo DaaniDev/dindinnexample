@@ -15,7 +15,9 @@ buildscript {
             'activity_ktx'       : '1.3.1',
             'fragment_ktx'       : '1.3.6',
             'gson'               : '2.8.6',
-            'navigation'        : '2.3.5'
+            'navigation'         : '2.3.5',
+            'hilt_test'          : '2.38.1',
+            'mockito'            : '1.10.19'
     ]
 
     repositories {

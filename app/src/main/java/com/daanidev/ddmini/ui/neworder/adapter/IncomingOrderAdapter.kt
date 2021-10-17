@@ -79,6 +79,8 @@ class IncomingOrderAdapter(val context: Activity) :
                 itemNewOrderBinding,this, newOrdersList[pos].created_at,
                 newOrdersList[pos].alerted_at, newOrdersList[pos].expired_at
             )
+            itemNewOrderBinding.tvOrderNum.text="#${newOrdersList[pos].order_id}"
+            itemNewOrderBinding.tvOrderTime.text=newOrdersList[pos].time
             itemNewOrderBinding.tvNewOrderCount.text="${newOrdersList[pos].data.size} items"
 
         }
